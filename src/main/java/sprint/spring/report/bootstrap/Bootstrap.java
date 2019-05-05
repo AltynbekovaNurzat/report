@@ -32,5 +32,8 @@ public class Bootstrap implements CommandLineRunner {
         reportRepository.save(r2);
         reportRepository.save(r3);
         reportRepository.save(r4);
+
+        Report report = new Report.ReportBuilder().setUser(u1).setDateString("12/12/2012").setEx1("Tablicy Builder").build();
+        reportRepository.save(report);
     }
 }
