@@ -7,7 +7,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.util.UriComponentsBuilder;
 import sprint.spring.report.entity.User;
-//import sprint.spring.report.factory.Factory;
+import sprint.spring.report.factory.Factory;
 import sprint.spring.report.service.UserService;
 
 import java.util.List;
@@ -24,7 +24,8 @@ public class UserController {
         System.out.println(u.getId());
         HttpHeaders headers = new HttpHeaders();
         headers.setLocation(builder.path("/sprint/user/{id}").buildAndExpand(u.getId()).toUri());
-        return new ResponseEntity<>("new User is saved",headers, HttpStatus.OK);
+        Factory factory = new Factory();
+        return new ResponseEntity<>(factory.getMessage(user),headers, HttpStatus.OK);
     }
 
     @GetMapping("/getAllUsers")

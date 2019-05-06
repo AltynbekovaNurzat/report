@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.util.UriComponentsBuilder;
 import sprint.spring.report.entity.Report;
 import sprint.spring.report.entity.User;
+import sprint.spring.report.factory.Factory;
 import sprint.spring.report.service.ReportService;
 import sprint.spring.report.service.UserService;
 
@@ -29,7 +30,8 @@ public class ReportController {
         Report r = reportService.addReport(report);
         HttpHeaders headers = new HttpHeaders();
         headers.setLocation(builder.path("/sprint/report/{id}").buildAndExpand(r.getId()).toUri());
-        return new ResponseEntity<>("Report is saved",headers,HttpStatus.CREATED);
+        Factory factory = new Factory();
+        return new ResponseEntity<>(factory.getMessage(report),headers,HttpStatus.CREATED);
     }
 
     @GetMapping("/getAllReports")
