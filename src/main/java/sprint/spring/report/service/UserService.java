@@ -7,7 +7,7 @@ import javax.persistence.criteria.CriteriaBuilder;
 import java.util.List;
 
 public interface UserService {
-    ResponseEntity<String> addUser(User user);
+    User addUser(User user);
     ResponseEntity<List<User>> getAllUsers();
     ResponseEntity<Object> getUserById(Integer userId);
     ResponseEntity<String> updateUser(User user);

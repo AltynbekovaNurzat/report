@@ -17,7 +17,7 @@ public class Bootstrap implements CommandLineRunner {
 
     @Override
     public void run(String... args) throws Exception {
-        User u1 = new User("Alina","alina","123","mail1");
+/*        User u1 = new User("Alina","alina","123","mail1");
         User u2 = new User("alin","alin","xyz","mail2");
         User u3 = new User("Bermet","admin","1234","mail3");
         userRepository.save(u1);
@@ -34,6 +34,6 @@ public class Bootstrap implements CommandLineRunner {
         reportRepository.save(r4);
 
         Report report = new Report.ReportBuilder().setUser(u1).setDateString("12/12/2012").setEx1("Tablicy Builder").build();
-        reportRepository.save(report);
+        reportRepository.save(report);*/
     }
 }

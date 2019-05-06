@@ -15,9 +15,8 @@ public class UserServiceImpl implements UserService {
     private UserRepository userRepository;
 
     @Override
-    public ResponseEntity<String> addUser(User user) {
-        userRepository.save(user);
-        return new ResponseEntity<>("User is saved", HttpStatus.CREATED);
+    public User addUser(User user) {
+        return userRepository.save(user);
     }
 
     @Override

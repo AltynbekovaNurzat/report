@@ -18,6 +18,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         http
                 .csrf().disable()
                 .authorizeRequests()
+                .antMatchers("/sprint/user/registration").permitAll()
                 .antMatchers("/sprint/exercise").permitAll()
                 .antMatchers("/sprint/user").hasAnyRole("USER","ADMIN")
                 .antMatchers("/sprint/user/**").hasRole("ADMIN")

@@ -1,10 +1,13 @@
 package sprint.spring.report.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.util.UriComponentsBuilder;
 import sprint.spring.report.entity.User;
+//import sprint.spring.report.factory.Factory;
 import sprint.spring.report.service.UserService;
 
 import java.util.List;
@@ -15,9 +18,13 @@ public class UserController {
     @Autowired
     private UserService userService;
 
-    @PostMapping
-    public ResponseEntity<String> addUser(@RequestBody User user){
-        return userService.addUser(user);
+    @PostMapping("registration")
+    public ResponseEntity<String> addUser(@RequestBody User user, UriComponentsBuilder builder){
+        User u = userService.addUser(user);
+        System.out.println(u.getId());
+        HttpHeaders headers = new HttpHeaders();
+        headers.setLocation(builder.path("/sprint/user/{id}").buildAndExpand(u.getId()).toUri());
+        return new ResponseEntity<>("new User is saved",headers, HttpStatus.OK);
     }
 
     @GetMapping("/getAllUsers")

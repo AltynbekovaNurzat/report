@@ -17,18 +17,15 @@ public interface ReportRepository extends JpaRepository<Report, Integer> {
                                         @Param("dateCreated") LocalDateTime dateCreated);
 
     @Query("select r from Report r join fetch r.user u " +
-            "where lower(u.fio) like coalesce (concat('%',:fio,'%'), u.fio)"
-            + "and r.dateString = coalesce(:dateString, r.dateString)")
+            "where lower(u.fio) like coalesce (cast(concat('%',:fio,'%') as text), lower(u.fio))"
+            + "and r.dateString = coalesce(cast(:dateString as text), r.dateString)")
     List<Report> getReportsByFioAndDateString(@Param("fio")String fio,
                                         @Param("dateString") String dateString);
 
     @Query("select r from Report r join fetch r.user u " +
             "where u.login = :login "
-            + "and r.dateString = coalesce(:dateString, r.dateString)")
+            + "and r.dateString = coalesce(cast(:dateString as text), r.dateString)")
     List<Report> getReportsOfUserByDateString(@Param("login")String login,
                                               @Param("dateString") String dateString);
 
-    @Query("select r from Report r join fetch r.user u " +
-            "where u.login = :login ")
-    List<Report> getReportsOfUser(@Param("login")String login);
 }

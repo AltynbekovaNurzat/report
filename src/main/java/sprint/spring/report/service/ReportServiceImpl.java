@@ -5,10 +5,12 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import sprint.spring.report.entity.Report;
+import sprint.spring.report.entity.User;
 import sprint.spring.report.repository.ReportRepository;
 
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class ReportServiceImpl implements ReportService {
@@ -16,9 +18,8 @@ public class ReportServiceImpl implements ReportService {
     private ReportRepository reportRepository;
 
     @Override
-    public ResponseEntity<String> addReport(Report report) {
-        reportRepository.save(report);
-        return new ResponseEntity<>("Report is saved", HttpStatus.CREATED);
+    public Report addReport(Report report) {
+        return reportRepository.save(report);
     }
 
     @Override
@@ -39,7 +40,7 @@ public class ReportServiceImpl implements ReportService {
                 return new ResponseEntity<>("Report is updated",HttpStatus.OK);
             }
         }
-        return new ResponseEntity<>("Report with id " + report.getId() + " does not exist", HttpStatus.BAD_REQUEST);
+        return new ResponseEntity<>("Report with id " + report.getId() + " does not exist", HttpStatus.NOT_FOUND);
     }
 
     @Override
@@ -50,7 +51,7 @@ public class ReportServiceImpl implements ReportService {
                 return new ResponseEntity<>("Report is removed",HttpStatus.OK);
             }
         }
-        return new ResponseEntity<>("Report with id " + reportId + " does not exist",HttpStatus.BAD_REQUEST);
+        return new ResponseEntity<>("Report with id " + reportId + " does not exist",HttpStatus.NOT_FOUND);
     }
 
     @Override
@@ -72,8 +73,13 @@ public class ReportServiceImpl implements ReportService {
     }
 
     @Override
-    public ResponseEntity<List<Report>> getReportsOfUser(String login) {
-        List<Report> reportList = reportRepository.getReportsOfUser(login);
-        return new ResponseEntity<>(reportList,HttpStatus.OK);
+    public Report getReportById(Integer reportId) {
+        for(Report r: reportRepository.findAll()){
+            if(r.getId().equals(reportId)){
+                return reportRepository.getOne(reportId);
+            }
+        }
+        return null;
     }
+
 }
